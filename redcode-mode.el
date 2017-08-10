@@ -124,7 +124,12 @@
               (if (looking-at redcode-instructions-exp)
                   (current-column) default-tab-width))
           default-tab-width))
-    0))
+    (if (looking-at ";")
+        (progn
+          (forward-line -1)
+          (if (looking-at "\\(\\S>\\)*\\s<")
+              (progn (skip-syntax-forward "^\\s<") (current-column)) 0))
+      0)))
 
 (defvar redcode-mode-syntax-table
   (let ((st (make-syntax-table)))
