@@ -45,7 +45,7 @@
 
 (defvar redcode-mode-map
   (let ((map (make-keymap)))
-    (define-key map "\C-c;" 'comment-region)
+    (define-key map "\C-c;" 'comment-or-uncomment-region)
     (define-key map "\C-j"  'newline-and-indent)
     map)
   "Keymap for Redcode mode.")
