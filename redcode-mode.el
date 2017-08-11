@@ -52,7 +52,7 @@
 
 (defun redcode-font-lock-expr (xs)
   (cl-loop for e in xs
-           collect (concat "\\<" e "\\>\\|\\<" (upcase e) "\\>")))
+           collect (concat "\\<\\(?:" e "\\|" (upcase e) "\\)\\>")))
 
 (defconst redcode-font-lock-instructions
   (let (instrs)
@@ -65,13 +65,14 @@
 
 (defconst redcode-font-lock-addr-modes
   (let (modes)
-    (dolist (i redcode-instructions modes)
+    (dolist (i  (append (redcode-font-lock-expr redcode-instructions)
+                        redcode-font-lock-instructions
+                        redcode-pseudo-opcodes)
+                modes)
       (dolist (m redcode-addressing-modes modes)
-        (setq modes (cons (concat "\\<\\(?:" i "\\|" (upcase i)
-                                  "\\)\\>.*,[[:space:]]*\\(" m "\\)")
+        (setq modes (cons (concat ",[[:space:]]*\\(?4:" m "\\)")
                           modes))
-        (setq modes (cons (concat "\\<\\(?:" i "\\|" (upcase i)
-                                  "\\)\\>[^,]*[[:space:]]\\(" m "\\)")
+        (setq modes (cons (concat i "[[:space:]]*\\(?4:" m "\\)")
                           modes))))))
 
 (defconst redcode-font-lock-keywords
@@ -89,7 +90,7 @@
                             font-lock-constant-face))
    (cl-loop for e in redcode-font-lock-addr-modes
             collect
-            (append (list e) (list '(1 font-lock-variable-name-face)))))
+            (append (list e) (list '(4 font-lock-variable-name-face)))))
   "Additional expressions to highlight in Redcode mode.")
 
 (defun redcode-indent-line ()
