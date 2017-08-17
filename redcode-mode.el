@@ -149,10 +149,10 @@
   "Redcode syntax table.")
 
 (define-derived-mode redcode-mode prog-mode "Redcode"
-  (set (make-local-variable 'comment-start) ";")
-  (set (make-local-variable 'font-lock-defaults) '(redcode-font-lock-keywords))
-  (set (make-local-variable 'indent-line-function) 'redcode-indent-line)
-  (set (make-local-variable 'tab-always-indent) t)
+  (setq-local comment-start ";")
+  (setq-local font-lock-defaults '(redcode-font-lock-keywords))
+  (setq-local indent-line-function #'redcode-indent-line)
+  (setq-local tab-always-indent t)
   (setq-local syntax-propertize-function #'redcode-syntax-propertize)
   "Core War's Redcode major mode.")
 
