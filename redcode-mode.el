@@ -134,9 +134,11 @@
 
 (defun redcode-syntax-propertize (start end)
   (funcall (syntax-propertize-rules
-            ("\\<\\(f\\)or[[:space:]]+0\\>" (1 "< b"))
-            ("\\<ro\\(f\\)\\>" (1 "> b")))
-           start end))
+            ((concat
+              "\\(?1:f\\)or[[:space:]]+0"
+              "\\(?:r\\(?:o[^f]\\|[^o]\\)\\|[^r]\\)*"
+              "ro\\(?2:f\\)") (1 "< b")  (2 "> b")))
+            1 end))
 
 (defvar redcode-mode-syntax-table
   (let ((st (make-syntax-table)))
