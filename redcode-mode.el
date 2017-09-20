@@ -132,14 +132,6 @@
               (progn (skip-syntax-forward "^\\s<") (current-column)) 0))
       0)))
 
-(defun redcode-syntax-propertize (start end)
-  (funcall (syntax-propertize-rules
-            ((concat
-              "\\(?1:f\\)or[[:space:]]+0"
-              "\\(?:r\\(?:o[^f]\\|[^o]\\)\\|[^r]\\)*"
-              "ro\\(?2:f\\)") (1 "< b")  (2 "> b")))
-            1 end))
-
 (defvar redcode-mode-syntax-table
   (let ((st (make-syntax-table)))
     (modify-syntax-entry ?_ "w" st)
@@ -155,7 +147,6 @@
   (setq-local font-lock-defaults '(redcode-font-lock-keywords))
   (setq-local indent-line-function #'redcode-indent-line)
   (setq-local tab-always-indent t)
-  (setq-local syntax-propertize-function #'redcode-syntax-propertize)
   "Core War's Redcode major mode.")
 
 ;;;###autoload
