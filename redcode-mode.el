@@ -90,8 +90,7 @@
                             font-lock-constant-face))
    (cl-loop for e in redcode-font-lock-addr-modes
             collect
-            (append (list e) (list '(4 font-lock-variable-name-face)))))
-  "Additional expressions to highlight in Redcode mode.")
+            (append (list e) (list '(4 font-lock-variable-name-face))))))
 
 (defun redcode-indent-line ()
   (interactive)
