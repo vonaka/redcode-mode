@@ -19,6 +19,8 @@
 
 ;;; Code:
 
+(require 'cl-macs)
+
 (defconst redcode-instructions
   '("dat" "mov" "add" "sub" "mul" "div" "mod" "jmp" "jmz" "jmn"
     "djn" "spl" "cmp" "seq" "sne" "slt" "ldp" "stp" "nop")
